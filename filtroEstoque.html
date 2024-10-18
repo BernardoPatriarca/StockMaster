@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="icon" href="https://i.imgur.com/fNGQqe7.png" type="image/png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="tema.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .table-container {
+            margin-top: 20px;
+        }
+
+        .dataTables_wrapper {
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <a href="index.html"
+                target="_blank" style="text-decoration: none; padding-top: 10px;">
+                <img src="https://i.imgur.com/3r4LnfL.png" class="logo" alt="Logo">
+            </a>
+            <i class="fas fa-bars toggle" onclick="toggleSidebar()" id="toggleIcon"></i>
+
+        </div>
+        <div class="top-bar-right">
+            <a href="https://web.whatsapp.com/" target="_blank" style="text-decoration: none; padding-top: 10px;">
+                <i class="fa-solid fa-headset" style="font-size: 26px; color: #ffffff;"></i>
+            </a>
+            <button class="btn-login" onclick="logout()" style="margin-left: 15px;">Sair</button>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar" style="line-height: 2em;">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="cadastroRapido.html">Cadastro Rápido</a>
+        <a href="cadastroProduto.html">Cadastro de Produto</a>
+        <a href="filtroEstoque.html">Estoque</a>
+    </div>
+
+    <div class="main-content" id="main-content">
+        <div style="padding: 20px;">
+            <h2>Tabela de Produtos do Mercadinho</h2>
+            <div class="table-container">
+                <table id="productTable" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nome do Produto</th>
+                            <th>Quantidade em Estoque</th>
+                            <th>Preço Unitário (R$)</th>
+                            <th>Fornecedor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Arroz</td>
+                            <td>50</td>
+                            <td>23.99</td>
+                            <td>Fornecedor A</td>
+                        </tr>
+                        <tr>
+                            <td>Feijão</td>
+                            <td>30</td>
+                            <td>12.50</td>
+                            <td>Fornecedor B</td>
+                        </tr>
+                        <tr>
+                            <td>Açúcar</td>
+                            <td>80</td>
+                            <td>5.75</td>
+                            <td>Fornecedor C</td>
+                        </tr>
+                        <tr>
+                            <td>Macarrão</td>
+                            <td>40</td>
+                            <td>4.99</td>
+                            <td>Fornecedor D</td>
+                        </tr>
+                        <tr>
+                            <td>Café</td>
+                            <td>60</td>
+                            <td>9.80</td>
+                            <td>Fornecedor E</td>
+                        </tr>
+                        <tr>
+                            <td>Leite</td>
+                            <td>100</td>
+                            <td>3.49</td>
+                            <td>Fornecedor F</td>
+                        </tr>
+                        <tr>
+                            <td>Manteiga</td>
+                            <td>25</td>
+                            <td>7.99</td>
+                            <td>Fornecedor G</td>
+                        </tr>
+                        <tr>
+                            <td>Ovos</td>
+                            <td>200</td>
+                            <td>0.50</td>
+                            <td>Fornecedor H</td>
+                        </tr>
+                        <tr>
+                            <td>Óleo de Soja</td>
+                            <td>120</td>
+                            <td>6.45</td>
+                            <td>Fornecedor I</td>
+                        </tr>
+                        <tr>
+                            <td>Farinha de Trigo</td>
+                            <td>70</td>
+                            <td>4.20</td>
+                            <td>Fornecedor J</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#productTable').DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "Nada encontrado",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Nenhum registro disponível",
+                    "infoFiltered": "(filtrado de _MAX_ registros no total)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primeiro",
+                        "last": "Último",
+                        "next": "Próximo",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (sidebar.classList.contains('show')) {
+                sidebar.classList.remove('show');
+                mainContent.classList.remove('shifted');
+                toggleIcon.style.color = '#fff';
+            } else {
+                sidebar.classList.add('show');
+                mainContent.classList.add('shifted');
+                toggleIcon.style.color = '#343a40';
+            }
+        }
+
+
+        function logout() {
+            window.location.href = 'login.html';
+        }
+    </script>
+
+</body>
+
+</html>

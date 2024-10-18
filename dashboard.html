@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="icon" href="https://i.imgur.com/fNGQqe7.png" type="image/png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="tema.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        @media (min-width: 768px) {
+            .charts {
+                display: flex;
+                flex-direction: row !important;
+            }
+        }
+
+        .chart-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+        }
+
+
+
+        @media (max-width: 768px) {
+
+            .charts {
+                display: flex;
+                flex-direction: column !important;
+            }
+
+            .chart-container {
+                flex: 0 1 100%;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <a href="index.html"
+                target="_blank" style="text-decoration: none; padding-top: 10px;">
+                <img src="https://i.imgur.com/3r4LnfL.png" class="logo" alt="Logo">
+            </a>
+            <i class="fas fa-bars toggle" onclick="toggleSidebar()" id="toggleIcon"></i>
+
+        </div>
+        <div class="top-bar-right">
+            <a href="https://web.whatsapp.com/" target="_blank" style="text-decoration: none; padding-top: 10px;">
+                <i class="fa-solid fa-headset" style="font-size: 26px; color: #ffffff;"></i>
+            </a>
+            <button class="btn-login" onclick="logout()" style="margin-left: 15px;">Sair</button>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar" style="line-height: 2em;">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="cadastroRapido.html">Cadastro Rápido</a>
+        <a href="cadastroProduto.html">Cadastro de Produto</a>
+        <a href="filtroEstoque.html">Estoque</a>
+    </div>
+
+    <div class="main-content" id="main-content">
+        <div style="padding: 20px;">
+            <h1>Dashboard - Mercadinho</h1>
+
+            <div class="charts">
+                <div class="chart-container">
+                    <h2>Entrada de Dinheiro (Vendas)</h2>
+                    <canvas id="chart1"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2>Saída de Dinheiro (Compras)</h2>
+                    <canvas id="chart2"></canvas>
+                </div>
+            </div>
+            <div class="charts">
+                <div class="chart-container">
+                    <h2>Controle de Quantidade - Pizzas</h2>
+                    <canvas id="chart3"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2>Desempenho de Vendas por Categoria</h2>
+                    <canvas id="chart4"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (sidebar.classList.contains('show')) {
+                sidebar.classList.remove('show');
+                mainContent.classList.remove('shifted');
+                toggleIcon.style.color = '#fff';
+            } else {
+                sidebar.classList.add('show');
+                mainContent.classList.add('shifted');
+                toggleIcon.style.color = '#343a40';
+            }
+        }
+
+
+        function logout() {
+            window.location.href = 'login.html';
+        }
+
+        const vendas = [3000, 4000, 3500, 3200, 4500, 4700, 5000];
+        new Chart(document.getElementById('chart1'), {
+            type: 'line',
+            data: {
+                labels: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                datasets: [{
+                    label: 'Vendas (R$)',
+                    data: vendas,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+
+        const compras = [1800, 2500, 2200, 2100, 2600, 2400, 3000];
+        new Chart(document.getElementById('chart2'), {
+            type: 'bar',
+            data: {
+                labels: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                datasets: [{
+                    label: 'Compras (R$)',
+                    data: compras,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+
+        const pizzas = [120, 100, 130, 90, 150, 170, 200];
+        new Chart(document.getElementById('chart3'), {
+            type: 'pie',
+            data: {
+                labels: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                datasets: [{
+                    label: 'Pizzas Vendidas',
+                    data: pizzas,
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF5733'],
+                    hoverOffset: 4
+                }]
+            }
+        });
+
+        const categorias = ['Bebidas', 'Alimentos', 'Limpeza', 'Higiene', 'Outros'];
+        const desempenhoVendas = [15000, 25000, 10000, 8000, 6000];
+
+        new Chart(document.getElementById('chart4'), {
+            type: 'doughnut',
+            data: {
+                labels: categorias,
+                datasets: [{
+                    label: 'Desempenho de Vendas por Categoria',
+                    data: desempenhoVendas,
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                    hoverOffset: 4
+                }]
+            }
+        });
+    </script>
+</body>
+
+</html>

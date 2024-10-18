@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://i.imgur.com/fNGQqe7.png" type="image/png">
+  <title>Tela de Cadastro</title>
+  <style>
+    body {
+      overflow: hidden;
+      background: linear-gradient(130deg, #e65c00, #ffaf60);
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: "Roboto", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .register-container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .form {
+      position: relative;
+      z-index: 1;
+      background: #FFFFFF;
+      max-width: 300px;
+      margin: 0 auto 100px;
+      padding: 25px 45px 45px 45px;
+      text-align: center;
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    }
+
+    .form input {
+      font-family: "Roboto", sans-serif;
+      outline: 0;
+      background: #f2f2f2;
+      width: 100%;
+      border: 0;
+      margin: 0 0 15px;
+      padding: 15px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    .form button {
+      font-family: "Roboto", sans-serif;
+      text-transform: uppercase;
+      outline: 0;
+      background: #e65c00;
+      width: 100%;
+      border: 0;
+      padding: 15px;
+      color: #FFFFFF;
+      font-size: 14px;
+      -webkit-transition: all 0.3 ease;
+      transition: all 0.3 ease;
+      cursor: pointer;
+    }
+
+    .form button:hover,
+    .form button:active,
+    .form button:focus {
+      background: #ffaf60;
+    }
+
+    .form .message {
+      margin: 15px 0 0;
+      color: #b3b3b3;
+      font-size: 12px;
+    }
+
+    .form .message a {
+      color: #e65c00;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="form">
+    <form class="register-form" onsubmit="return validateRegister()">
+      <h2 style="color: #e65c00;">CADASTRO</h2>
+      <p class="error-message" id="errorMessage">Senhas não coincidem!</p>
+      <input type="text" id="nome" placeholder="Nome" required>
+      <input type="email" id="email" placeholder="E-mail" required>
+      <input type="password" id="password" placeholder="Senha" required>
+      <input type="password" id="confirmPassword" placeholder="Confirmar Senha" required>
+      <button type="submit">Cadastrar</button>
+      <p class="message">Já tem uma conta? <a href="login.html">Fazer login</a></p>
+    </form>
+  </div>
+
+  <script>
+    function validateRegister() {
+      var password = document.getElementById("password").value;
+      var confirmPassword = document.getElementById("confirmPassword").value;
+      var errorMessage = document.getElementById("errorMessage");
+
+      // Verifica se as senhas coincidem
+      if (password !== confirmPassword) {
+        errorMessage.style.display = "block";
+        return false;
+      } else {
+        errorMessage.style.display = "none";
+        // Lógica de cadastro pode ser adicionada aqui
+        alert("Cadastro realizado com sucesso!");
+
+        // Redireciona para a página de login
+        window.location.href = "login.html";
+        return false; // Previne o recarregamento da página após o redirecionamento
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>

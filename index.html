@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="STOCK MASTER: Um gestor de estoque inovador, acessível e fácil de usar para estoquistas, vendedores e clientes.">
+  <link rel="icon" href="https://i.imgur.com/fNGQqe7.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <title>Stock Master</title>
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background-color: #e65c00;
+      padding: 20px 20px 20px 0px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      /* Para garantir que ela fique acima de outros elementos */
+    }
+
+
+    .top-bar .logo {
+      padding-left: 20px;
+      width: 220px;
+      height: 50px;
+    }
+
+    .top-bar h1 {
+      margin: 0;
+      font-size: 1.5em;
+      text-align: center;
+      flex: 1;
+      color: white;
+    }
+
+    .top-bar .btn-login {
+      background-color: #ff751a;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .top-bar .btn-login:hover {
+      background-color: #fff;
+      color: #e65c00;
+    }
+
+    /* Primeiro andar - com fundo de imagem */
+    .first-section {
+      background-image: url('https://i.imgur.com/gts0cgt.jpeg');
+      background-size: cover;
+      background-position: center;
+      padding: 180px 20px 80px 20px;
+      /* Aumente o padding-top para acomodar a barra fixa */
+      color: white;
+      text-align: center;
+      min-height: 80vh;
+    }
+
+
+    .first-section .content {
+      padding: 40px;
+      position: absolute;
+      max-width: 400px;
+      left: 55%;
+      text-align: start;
+      font-size: 22px;
+      min-height: 68%;
+      right: 10%;
+      top: 32%;
+    }
+
+    .second-section {
+      background-image: url('https://i.imgur.com/J4uN52X.png');
+      background-size: cover;
+      background-position: center;
+      padding: 80px 20px;
+      color: white;
+      text-align: center;
+      min-height: 80vh;
+    }
+
+    .second-section .content {
+      background-color: rgb(227 91 0 / 40%);
+      padding: 40px;
+      border-radius: 40px;
+      max-width: 800px;
+      min-width: 400px;
+      min-height: 600px;
+      margin: 40px;
+      display: inline-grid;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .third-section {
+      background-image: url('https://i.imgur.com/td2xg7m.png');
+      background-size: cover;
+      background-position: center;
+      padding: 80px 20px;
+      color: white;
+      text-align: center;
+      min-height: 80vh;
+    }
+
+    .third-section .content {
+      background-color: rgb(227 91 0 / 40%);
+      padding: 40px;
+      border-radius: 40px;
+      max-width: 800px;
+      min-width: 400px;
+      min-height: 600px;
+      margin: 40px;
+      display: inline-grid;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .fourth-section {
+      background-image: url('https://i.imgur.com/47nIzcL.png');
+      background-size: cover;
+      background-position: center;
+      padding: 80px 20px;
+      text-align: center;
+      min-height: 80vh;
+    }
+
+    .fourth-section .content {
+      background-color: rgb(227 91 0 / 40%);
+      padding: 40px;
+      border-radius: 40px;
+      max-width: 800px;
+      min-width: 400px;
+      min-height: 600px;
+      margin: 40px;
+      display: inline-grid;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h1,
+    p {
+      margin: 0 0 20px 0;
+    }
+
+    .cta-button {
+      background-color: white;
+      color: #e65c00;
+      padding: 15px 30px;
+      font-size: 1em;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-button:hover {
+      background-color: #ff751a;
+      color: white;
+    }
+
+    /* Andares subsequentes */
+    .section {
+      padding: 60px 20px;
+      text-align: center;
+      min-height: 70vh;
+      color: #333;
+      background-color: #fff4e6;
+    }
+
+    .section:nth-child(even) {
+      background-color: white;
+    }
+
+    .section h2 {
+      color: #e65c00;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      background-color: #e65c00;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <img src="https://i.imgur.com/3r4LnfL.png" class="logo">
+    </div>
+    <div class="top-bar-right">
+      <a href="https://web.whatsapp.com/" target="_blank"
+        style="text-decoration: none; padding-top: 40px; padding-right: 30px;">
+        <i class="fa-solid fa-headset" style="font-size: 26px; color: #ffffff;"></i>
+      </a>
+      <button class="btn-login" onclick="login()" style="margin-right: 15px;">Login / Cadastro</button>
+    </div>
+  </div>
+
+  <!-- Primeiro andar com a imagem de fundo -->
+  <section class="first-section">
+    <div class="content">
+      <h1>Seu estoque otimizado!</h1>
+      <p style="letter-spacing: 1px; text-align: start; line-height: 1.5;">
+        Gestão inovadora e acessível para pequenas empresas que valorizam simplicidade e eficiência.
+      </p>
+      <button class="cta-button"
+        onclick="document.getElementById('fourth-section').scrollIntoView({ behavior: 'smooth' });">Saber mais</button>
+    </div>
+
+  </section>
+
+  <!-- Segundo andar - Texto aleatório -->
+  <section class="second-section section">
+    <div
+      style="display: flex; align-items: start; justify-content: space-between; font-size: 24px; line-height: 1.5; letter-spacing: 1px;">
+      <div style="flex: 1; padding: 20px; position: relative; top: 6vh; text-align: start; margin-left: 5%;">
+        <h2>Funcionalidades Avançadas</h2>
+        <ul style="list-style-type: none; padding: 0; color: #333; line-height: 2.0;">
+          <li style="position: relative; padding-left: 15px;">
+            <span style="position: absolute; left: 0;">•</span> Gestão de entradas e saídas em tempo real
+          </li>
+          <li style="position: relative; padding-left: 15px;">
+            <span style="position: absolute; left: 0;">•</span> Alertas de níveis críticos de estoque
+          </li>
+          <li style="position: relative; padding-left: 15px;">
+            <span style="position: absolute; left: 0;">•</span> Previsão de demanda com base em dados históricos
+          </li>
+          <li style="position: relative; padding-left: 15px;">
+            <span style="position: absolute; left: 0;">•</span> Relatórios detalhados de desempenho
+          </li>
+          <li style="position: relative; padding-left: 15px;">
+            <span style="position: absolute; left: 0;">•</span> Integração com sistemas de ERP
+          </li>
+          <li style="position: relative; padding-left: 15px;">
+            <span style="position: absolute; left: 0;">•</span> Interface amigável e intuitiva
+          </li>
+          <li style="position: relative; padding-left: 15px;">
+            <span style="position: absolute; left: 0;">•</span> Suporte multiusuário com diferentes permissões
+          </li>
+          <li style="position: relative; padding-left: 15px;">
+            <span style="position: absolute; left: 0;">•</span> Acesso remoto via dispositivos móveis
+          </li>
+        </ul>
+
+      </div>
+      <div style="flex: 1; padding: 20px;">
+        <img src="https://i.imgur.com/7ZSWibu.png" alt="Estoque" style="width: 80%; border-radius: 20px;">
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Terceiro andar - Texto aleatório -->
+  <section class="third-section">
+    <div class="content">
+      <h2 style="font-size: 32px;">Plano bronze</h2>
+      <ul style="list-style-type: none; padding: 0; color: #ffffff; line-height: 3.0; text-align: start;">
+        <li style="position: relative; padding-left: 15px;">
+          <span style="position: absolute; left: 0;">•</span> Gestão de entradas e saídas em tempo real
+        </li>
+        <li style="position: relative; padding-left: 15px;">
+          <span style="position: absolute; left: 0;">•</span> Alertas de níveis críticos de estoque
+        </li>
+      </ul>
+    </div>
+    <div class="content">
+      <h2 style="font-size: 32px;">Plano prata</h2>
+      <ul style="list-style-type: none; padding: 0; color: #ffffff; line-height: 3.0; text-align: start;">
+        <li style="position: relative; padding-left: 15px;">
+          <span style="position: absolute; left: 0;">•</span> Gestão de entradas e saídas em tempo real
+        </li>
+        <li style="position: relative; padding-left: 15px;">
+          <span style="position: absolute; left: 0;">•</span> Alertas de níveis críticos de estoque
+        </li>
+        <li style="position: relative; padding-left: 15px;">
+          <span style="position: absolute; left: 0;">•</span> Previsão de demanda com base em dados históricos
+        </li>
+        <li style="position: relative; padding-left: 15px;">
+          <span style="position: absolute; left: 0;">•</span> Relatórios detalhados de desempenho
+        </li>
+      </ul>
+    </div>
+    <div class="content">
+      <h2 style="font-size: 32px;">Plano ouro</h2>
+      <ul style="list-style-type: none; padding: 0; color: #ffffff; line-height: 3.0;  text-align: start;">
+        <li style="position: relative; padding-left: 15px;">
+          <span style="position: absolute; left: 0;">•</span> Gestão de entradas e saídas em tempo real
+        </li>
+        <li style="position: relative; padding-left: 15px;">
+          <span style="position: absolute; left: 0;">•</span> Alertas de níveis críticos de estoque
+        </li>
+        <li style="position: relative; padding-left: 15px;">
+          <span style="position: absolute; left: 0;">•</span> Previsão de demanda com base em dados históricos
+        </li>
+        <li style="position: relative; padding-left: 15px;">
+          <span style="position: absolute; left: 0;">•</span> Relatórios detalhados de desempenho
+        </li>
+        <li style="position: relative; padding-left: 15px;">
+          <span style="position: absolute; left: 0;">•</span> Integração com sistemas de ERP
+        </li>
+        <li style="position: relative; padding-left: 15px;">
+          <span style="position: absolute; left: 0;">•</span> Interface amigável e intuitiva
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Quarto andar - Texto aleatório -->
+  <section id="fourth-section" class="fourth-section section">
+    <div
+      style="font-size: 18px; line-height: 1.5; letter-spacing: 1px; max-width: 60%; position: relative; left: 20%; text-align: justify; text-indent: 30px;">
+      <h2 style="font-size: 32px !important; text-align: center;">Sobre Nossa Empresa e Objetivos do Projeto</h2>
+      <p>Somos um grupo formado por Bernardo Patriarca, Matheus Henrique Braun Nunes e Lucas Pansera, comprometido com a
+        inovação e a eficiência na gestão de estoque. Nosso projeto, o STOCK MASTER, nasce da necessidade de resolver
+        problemas enfrentados por diversas empresas devido à má gestão de seus inventários. Frequentemente, a falta de
+        controle adequado sobre as entradas e saídas de estoque resulta em discrepâncias significativas entre o
+        inventário
+        registrado e o físico, prejudicando o fluxo de trabalho e impactando diretamente na produtividade e na
+        satisfação
+        dos clientes.</p>
+
+      <p>O STOCK MASTER foi projetado com o objetivo de solucionar esses problemas de forma eficiente e inovadora. Nosso
+        sistema automatizado registra em tempo real todas as movimentações de estoque, proporcionando uma visão clara e
+        precisa do inventário em qualquer momento. O principal diferencial do STOCK MASTER é o mapeamento de itens, uma
+        funcionalidade que permite localizar rapidamente qualquer produto no estoque, reduzindo o tempo gasto na busca
+        de
+        itens e otimizando o fluxo de trabalho.</p>
+
+      <p>Além disso, o sistema oferece uma integração fácil e rápida com outras plataformas, como sistemas ERP e WMS,
+        permitindo que nossos clientes mantenham seus processos operacionais sem interrupções. Através dessa integração,
+        é
+        possível garantir a reposição automática de produtos quando os níveis críticos forem atingidos, evitando tanto
+        excessos quanto faltas de estoque. Isso resulta em uma gestão mais precisa e eficiente, gerando economia de
+        tempo e
+        recursos, além de reduzir os erros manuais e a necessidade de retrabalhos.</p>
+
+      <p>O principal objetivo do STOCK MASTER é garantir que nossos clientes possam focar em suas atividades principais,
+        enquanto nós cuidamos de otimizar toda a gestão de estoque. Com uma solução robusta e escalável, estamos prontos
+        para atender as necessidades de empresas de diversos tamanhos, melhorando a eficiência operacional, a
+        produtividade
+        e a satisfação final do cliente.</p>
+    </div>
+    <div style="text-align: center; margin-top: 20px; color: #e65c00;">
+      <a href="https://www.instagram.com/seu_perfil" target="_blank"
+        style="margin: 0 15px; font-size: 24px; color: #e65c00; text-decoration: none;">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://wa.me/seu_numero" target="_blank"
+        style="margin: 0 15px; font-size: 24px; color: #e65c00; text-decoration: none;">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+      <a href="https://x.com/seu_perfil" target="_blank"
+        style="margin: 0 15px; font-size: 24px; color: #e65c00; text-decoration: none;">
+        <i class="fab fa-x-twitter"></i>
+      </a>
+
+
+    </div>
+  </section>
+
+
+  <footer>
+    &copy; 2024 STOCK MASTER. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    function login() {
+      window.location.href = 'login.html'; // Redireciona para a tela de login
+    }
+  </script>
+
+</body>
+
+</html>
