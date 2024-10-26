@@ -13,7 +13,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-
         @media (min-width: 768px) {
             .charts {
                 display: flex;
@@ -21,43 +20,47 @@
             }
         }
 
-        .chart-container {
+        .chart-container,
+        .table-container {
             width: 100%;
             margin: 20px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         canvas {
             width: 100%;
-            height: auto;
+            height: 300px;
         }
 
-
-
         @media (max-width: 768px) {
-
             .charts {
                 display: flex;
                 flex-direction: column !important;
             }
 
-            .chart-container {
+            .chart-container,
+            .table-container {
                 flex: 0 1 100%;
             }
+        }
+
+        .analysis {
+            margin: 30px 0;
         }
     </style>
 
 </head>
 
 <body>
-
     <div class="top-bar">
         <div class="top-bar-left">
-            <a href="index.html"
-                target="_blank" style="text-decoration: none; padding-top: 10px;">
+            <a href="index.html" target="_blank" style="text-decoration: none; padding-top: 10px;">
                 <img src="https://i.imgur.com/3r4LnfL.png" class="logo" alt="Logo">
             </a>
             <i class="fas fa-bars toggle" onclick="toggleSidebar()" id="toggleIcon"></i>
-
         </div>
         <div class="top-bar-right">
             <a href="https://web.whatsapp.com/" target="_blank" style="text-decoration: none; padding-top: 10px;">
@@ -70,13 +73,16 @@
         <a href="dashboard.html">Dashboard</a>
         <a href="cadastroRapido.html">Cadastro Rápido</a>
         <a href="cadastroProduto.html">Cadastro de Produto</a>
+        <a href="cadastroFornecedor.html">Cadastro de Fornecedor</a>
+        <a href="comprarProduto.html">Compra de Produto</a>
         <a href="filtroEstoque.html">Estoque</a>
+        <a href="mapeamento.html">Mapeamento</a>
     </div>
 
     <div class="main-content" id="main-content">
         <div style="padding: 20px;">
-            <h1>Dashboard - Mercadinho</h1>
 
+            <!-- Primeiro Grupo de Gráficos -->
             <div class="charts">
                 <div class="chart-container">
                     <h2>Entrada de Dinheiro (Vendas)</h2>
@@ -87,16 +93,140 @@
                     <canvas id="chart2"></canvas>
                 </div>
             </div>
+
+            <div class="table-container">
+                <h2>Produtos Mais Vendidos</h2>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Quantidade Vendida</th>
+                            <th>Valor Total (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cimento</td>
+                            <td>200</td>
+                            <td>3.000,00</td>
+                        </tr>
+                        <tr>
+                            <td>Areia</td>
+                            <td>150</td>
+                            <td>1.500,00</td>
+                        </tr>
+                        <tr>
+                            <td>Bloco Cerâmico</td>
+                            <td>120</td>
+                            <td>2.400,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Segundo Grupo de Gráficos -->
             <div class="charts">
                 <div class="chart-container">
-                    <h2>Controle de Quantidade - Pizzas</h2>
+                    <h2>Controle de Estoque - Materiais</h2>
                     <canvas id="chart3"></canvas>
                 </div>
                 <div class="chart-container">
                     <h2>Desempenho de Vendas por Categoria</h2>
-                    <canvas id="chart4"></canvas>
+                    <canvas id="chart4" style="max-height: 600px;"></canvas>
                 </div>
             </div>
+
+            <div class="table-container">
+                <h2>Fornecedores Mais Utilizados</h2>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Fornecedor</th>
+                            <th>Quantidade de Pedidos</th>
+                            <th>Valor Total (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Construtora A</td>
+                            <td>30</td>
+                            <td>20.000,00</td>
+                        </tr>
+                        <tr>
+                            <td>Distribuidora B</td>
+                            <td>25</td>
+                            <td>15.000,00</td>
+                        </tr>
+                        <tr>
+                            <td>Fornecedor C</td>
+                            <td>20</td>
+                            <td>10.000,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Terceiro Grupo de Tabelas -->
+            <div class="table-container">
+                <h2>Resumo do Estoque</h2>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Quantidade em Estoque</th>
+                            <th>Estoque Mínimo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cimento</td>
+                            <td>500</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>Areia</td>
+                            <td>300</td>
+                            <td>50</td>
+                        </tr>
+                        <tr>
+                            <td>Bloco Cerâmico</td>
+                            <td>200</td>
+                            <td>30</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h2>Feedback dos Clientes</h2>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Feedback</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>José Santos</td>
+                            <td>Ótimos preços e produtos de qualidade!</td>
+                            <td>20/10/2024</td>
+                        </tr>
+                        <tr>
+                            <td>Fernanda Almeida</td>
+                            <td>Bom atendimento, mas a entrega poderia ser mais rápida.</td>
+                            <td>18/10/2024</td>
+                        </tr>
+                        <tr>
+                            <td>Roberto Lima</td>
+                            <td>Adorei a variedade de produtos!</td>
+                            <td>15/10/2024</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 
@@ -117,72 +247,66 @@
             }
         }
 
-
         function logout() {
-            window.location.href = 'login.html';
+            alert('Logout realizado com sucesso!');
         }
 
-        const vendas = [3000, 4000, 3500, 3200, 4500, 4700, 5000];
+        const vendas = [10000, 12000, 15000, 13000, 11000, 17000, 16000];
         new Chart(document.getElementById('chart1'), {
             type: 'line',
             data: {
                 labels: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
                 datasets: [{
-                    label: 'Vendas (R$)',
+                    label: 'Entradas',
                     data: vendas,
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderColor: 'green',
                     fill: false
-                }]
-            },
-            options: { scales: { y: { beginAtZero: true } } }
-        });
-
-        const compras = [1800, 2500, 2200, 2100, 2600, 2400, 3000];
-        new Chart(document.getElementById('chart2'), {
-            type: 'bar',
-            data: {
-                labels: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-                datasets: [{
-                    label: 'Compras (R$)',
-                    data: compras,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: { scales: { y: { beginAtZero: true } } }
-        });
-
-        const pizzas = [120, 100, 130, 90, 150, 170, 200];
-        new Chart(document.getElementById('chart3'), {
-            type: 'pie',
-            data: {
-                labels: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-                datasets: [{
-                    label: 'Pizzas Vendidas',
-                    data: pizzas,
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF5733'],
-                    hoverOffset: 4
                 }]
             }
         });
 
-        const categorias = ['Bebidas', 'Alimentos', 'Limpeza', 'Higiene', 'Outros'];
-        const desempenhoVendas = [15000, 25000, 10000, 8000, 6000];
-
-        new Chart(document.getElementById('chart4'), {
-            type: 'doughnut',
+        const compras = [7000, 8000, 6000, 7500, 7200, 6800, 9000];
+        new Chart(document.getElementById('chart2'), {
+            type: 'line',
             data: {
-                labels: categorias,
+                labels: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
                 datasets: [{
-                    label: 'Desempenho de Vendas por Categoria',
-                    data: desempenhoVendas,
+                    label: 'Saídas',
+                    data: compras,
+                    borderColor: 'red',
+                    fill: false
+                }]
+            }
+        });
+
+        const estoque = [350, 220, 400, 250, 510];
+        new Chart(document.getElementById('chart3'), {
+            type: 'bar',
+            data: {
+                labels: ['Cimento', 'Areia', 'Bloco Cerâmico', 'Tijolo', 'Outros'],
+                datasets: [{
+                    label: 'Quantidade em Estoque',
+                    data: estoque,
+                    backgroundColor: ['#4BC0C0', '#FF9F40', '#36A2EB', '#FF6384', '#9966FF']
+                }]
+            }
+        });
+
+        const categorias = [5060, 7204, 9740, 8400, 12530];
+        new Chart(document.getElementById('chart4'), {
+            type: 'pie',
+            data: {
+                labels: ['Cimento', 'Areia', 'Bloco Cerâmico', 'Tijolo', 'Outros'],
+                datasets: [{
+                    label: 'Desempenho por Categoria',
+                    data: categorias,
                     backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-                    hoverOffset: 4
                 }]
             }
         });
     </script>
+
 </body>
 
 </html>
+    

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produto</title>
+
+    <link rel="icon" href="https://i.imgur.com/fNGQqe7.png" type="image/png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="tema.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<style>
+    .shelf-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .shelf {
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        width: 18%;
+        /* 5 prateleiras em uma linha */
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+
+    .shelf h3 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .product {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 10px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        color: #fff;
+        /* Cor do texto branco */
+    }
+
+    .status-ok {
+        background-color: green;
+    }
+
+    .status-low {
+        background-color: orange;
+    }
+
+    .status-empty {
+        background-color: red;
+    }
+
+    .container, .container-lg, .container-md, .container-sm, .container-xl {
+        max-width: 90%;
+    }
+
+    @media (max-width: 768px) {
+        .shelf {
+            width: 100%;
+            /* 1 prateleira em telas pequenas */
+        }
+    }
+</style>
+
+<body>
+
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <a href="index.html" target="_blank" style="text-decoration: none; padding-top: 10px;">
+                <img src="https://i.imgur.com/3r4LnfL.png" class="logo" alt="Logo">
+            </a>
+            <i class="fas fa-bars toggle" onclick="toggleSidebar()" id="toggleIcon"></i>
+
+        </div>
+        <div class="top-bar-right">
+            <a href="https://web.whatsapp.com/" target="_blank" style="text-decoration: none; padding-top: 10px;">
+                <i class="fa-solid fa-headset" style="font-size: 26px; color: #ffffff;"></i>
+            </a>
+            <button class="btn-login" onclick="logout()" style="margin-left: 15px;">Sair</button>
+        </div>
+    </div>
+
+    <div class="sidebar" id="sidebar" style="line-height: 2em;">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="cadastroRapido.html">Cadastro Rápido</a>
+        <a href="cadastroProduto.html">Cadastro de Produto</a>
+        <a href="cadastroFornecedor.html">Cadastro de Fornecedor</a>
+        <a href="comprarProduto.html">Compra de Produto</a>
+        <a href="filtroEstoque.html">Estoque</a>
+        <a href="mapeamento.html">Mapeamento</a>
+    </div>
+
+    <div class="main-content" id="main-content">
+        <div class="container">
+            <h1 class="text-center my-4">Mapeamento de Itens - Estoque</h1>
+
+            <input type="text" id="filterInput" class="form-control mb-3" placeholder="Filtrar produtos...">
+            <button id="sortButton" class="btn btn-primary mb-3">Ordenar por Quantidade</button>
+
+            <div class="shelf-container" id="shelfContainer">
+                <!-- Prateleira 1 -->
+                <div class="shelf">
+                    <h3>Prateleira 1</h3>
+                    <div class="product status-ok">
+                        <span>Cimento</span>
+                        <span class="quantity">50</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Areia</span>
+                        <span class="quantity">15</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Brita</span>
+                        <span class="quantity">30</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Tijolos</span>
+                        <span class="quantity">5</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Madeira</span>
+                        <span class="quantity">40</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 2 -->
+                <div class="shelf">
+                    <h3>Prateleira 2</h3>
+                    <div class="product status-low">
+                        <span>Ferro</span>
+                        <span class="quantity">12</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Prego</span>
+                        <span class="quantity">60</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Parafuso</span>
+                        <span class="quantity">3</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Fita Adesiva</span>
+                        <span class="quantity">25</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Cola</span>
+                        <span class="quantity">20</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 3 -->
+                <div class="shelf">
+                    <h3>Prateleira 3</h3>
+                    <div class="product status-ok">
+                        <span>Ferramentas</span>
+                        <span class="quantity">45</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Escada</span>
+                        <span class="quantity">10</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Protetores de Ouvido</span>
+                        <span class="quantity">2</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Óleo Lubrificante</span>
+                        <span class="quantity">30</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Luvas de Proteção</span>
+                        <span class="quantity">25</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 4 -->
+                <div class="shelf">
+                    <h3>Prateleira 4</h3>
+                    <div class="product status-ok">
+                        <span>Tintas</span>
+                        <span class="quantity">50</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Pincéis</span>
+                        <span class="quantity">15</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Rolos de Pintura</span>
+                        <span class="quantity">20</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Fita Crepe</span>
+                        <span class="quantity">3</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Spray de Tinta</span>
+                        <span class="quantity">40</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 5 -->
+                <div class="shelf">
+                    <h3>Prateleira 5</h3>
+                    <div class="product status-ok">
+                        <span>Chapisco</span>
+                        <span class="quantity">25</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Argamassa</span>
+                        <span class="quantity">0</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Revestimento</span>
+                        <span class="quantity">5</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Granolite</span>
+                        <span class="quantity">30</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Rejunte</span>
+                        <span class="quantity">40</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 6 -->
+                <div class="shelf">
+                    <h3>Prateleira 6</h3>
+                    <div class="product status-ok">
+                        <span>Cerâmica</span>
+                        <span class="quantity">20</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Cal</span>
+                        <span class="quantity">15</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Piso Laminado</span>
+                        <span class="quantity">2</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Papel de Parede</span>
+                        <span class="quantity">35</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Rodapé</span>
+                        <span class="quantity">30</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 7 -->
+                <div class="shelf">
+                    <h3>Prateleira 7</h3>
+                    <div class="product status-ok">
+                        <span>Gesso</span>
+                        <span class="quantity">22</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Massas</span>
+                        <span class="quantity">10</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Espuma Acústica</span>
+                        <span class="quantity">1</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Forro de Gesso</span>
+                        <span class="quantity">25</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Revestimento de Parede</span>
+                        <span class="quantity">30</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 8 -->
+                <div class="shelf">
+                    <h3>Prateleira 8</h3>
+                    <div class="product status-ok">
+                        <span>Concreto</span>
+                        <span class="quantity">18</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Placas de Isopor</span>
+                        <span class="quantity">7</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Materiais Elétricos</span>
+                        <span class="quantity">0</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Fios</span>
+                        <span class="quantity">40</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Interruptores</span>
+                        <span class="quantity">30</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 9 -->
+                <div class="shelf">
+                    <h3>Prateleira 9</h3>
+                    <div class="product status-ok">
+                        <span>Materiais de Jardinagem</span>
+                        <span class="quantity">22</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Sementes</span>
+                        <span class="quantity">8</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Adubos</span>
+                        <span class="quantity">2</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Ferramentas de Jardinagem</span>
+                        <span class="quantity">25</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Plantas</span>
+                        <span class="quantity">30</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 10 -->
+                <div class="shelf">
+                    <h3>Prateleira 10</h3>
+                    <div class="product status-ok">
+                        <span>Materiais de Limpeza</span>
+                        <span class="quantity">27</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Desinfetantes</span>
+                        <span class="quantity">5</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Panos de Limpeza</span>
+                        <span class="quantity">1</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Esponjas</span>
+                        <span class="quantity">35</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Baldes</span>
+                        <span class="quantity">28</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 11 -->
+                <div class="shelf">
+                    <h3>Prateleira 11</h3>
+                    <div class="product status-ok">
+                        <span>Cimento</span>
+                        <span class="quantity">50</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Areia</span>
+                        <span class="quantity">15</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Brita</span>
+                        <span class="quantity">30</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Tijolos</span>
+                        <span class="quantity">5</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Madeira</span>
+                        <span class="quantity">40</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 12 -->
+                <div class="shelf">
+                    <h3>Prateleira 12</h3>
+                    <div class="product status-low">
+                        <span>Ferro</span>
+                        <span class="quantity">12</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Prego</span>
+                        <span class="quantity">60</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Parafuso</span>
+                        <span class="quantity">3</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Fita Adesiva</span>
+                        <span class="quantity">25</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Cola</span>
+                        <span class="quantity">20</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 13 -->
+                <div class="shelf">
+                    <h3>Prateleira 13</h3>
+                    <div class="product status-ok">
+                        <span>Ferramentas</span>
+                        <span class="quantity">45</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Escada</span>
+                        <span class="quantity">10</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Protetores de Ouvido</span>
+                        <span class="quantity">2</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Óleo Lubrificante</span>
+                        <span class="quantity">30</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Luvas de Proteção</span>
+                        <span class="quantity">25</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 14 -->
+                <div class="shelf">
+                    <h3>Prateleira 14</h3>
+                    <div class="product status-ok">
+                        <span>Tintas</span>
+                        <span class="quantity">50</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Pincéis</span>
+                        <span class="quantity">15</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Rolos de Pintura</span>
+                        <span class="quantity">20</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Fita Crepe</span>
+                        <span class="quantity">3</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Spray de Tinta</span>
+                        <span class="quantity">40</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 15 -->
+                <div class="shelf">
+                    <h3>Prateleira 15</h3>
+                    <div class="product status-ok">
+                        <span>Chapisco</span>
+                        <span class="quantity">25</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Argamassa</span>
+                        <span class="quantity">0</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Revestimento</span>
+                        <span class="quantity">5</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Granolite</span>
+                        <span class="quantity">30</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Rejunte</span>
+                        <span class="quantity">40</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 16 -->
+                <div class="shelf">
+                    <h3>Prateleira 16</h3>
+                    <div class="product status-ok">
+                        <span>Cerâmica</span>
+                        <span class="quantity">20</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Cal</span>
+                        <span class="quantity">15</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Piso Laminado</span>
+                        <span class="quantity">2</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Papel de Parede</span>
+                        <span class="quantity">35</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Rodapé</span>
+                        <span class="quantity">30</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 17 -->
+                <div class="shelf">
+                    <h3>Prateleira 17</h3>
+                    <div class="product status-ok">
+                        <span>Gesso</span>
+                        <span class="quantity">22</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Massas</span>
+                        <span class="quantity">10</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Espuma Acústica</span>
+                        <span class="quantity">1</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Forro de Gesso</span>
+                        <span class="quantity">25</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Revestimento de Parede</span>
+                        <span class="quantity">30</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 18 -->
+                <div class="shelf">
+                    <h3>Prateleira 18</h3>
+                    <div class="product status-ok">
+                        <span>Concreto</span>
+                        <span class="quantity">18</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Placas de Isopor</span>
+                        <span class="quantity">7</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Materiais Elétricos</span>
+                        <span class="quantity">0</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Fios</span>
+                        <span class="quantity">40</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Interruptores</span>
+                        <span class="quantity">30</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 19 -->
+                <div class="shelf">
+                    <h3>Prateleira 19</h3>
+                    <div class="product status-ok">
+                        <span>Materiais de Jardinagem</span>
+                        <span class="quantity">22</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Sementes</span>
+                        <span class="quantity">8</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Adubos</span>
+                        <span class="quantity">2</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Ferramentas de Jardinagem</span>
+                        <span class="quantity">25</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Plantas</span>
+                        <span class="quantity">30</span>
+                    </div>
+                </div>
+            
+                <!-- Prateleira 20 -->
+                <div class="shelf">
+                    <h3>Prateleira 20</h3>
+                    <div class="product status-ok">
+                        <span>Materiais de Limpeza</span>
+                        <span class="quantity">27</span>
+                    </div>
+                    <div class="product status-low">
+                        <span>Desinfetantes</span>
+                        <span class="quantity">5</span>
+                    </div>
+                    <div class="product status-empty">
+                        <span>Panos de Limpeza</span>
+                        <span class="quantity">1</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Esponjas</span>
+                        <span class="quantity">35</span>
+                    </div>
+                    <div class="product status-ok">
+                        <span>Detergente</span>
+                        <span class="quantity">20</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (sidebar.classList.contains('show')) {
+                sidebar.classList.remove('show');
+                mainContent.classList.remove('shifted');
+                toggleIcon.style.color = '#fff';
+            } else {
+                sidebar.classList.add('show');
+                mainContent.classList.add('shifted');
+                toggleIcon.style.color = '#343a40';
+            }
+        }
+
+
+        function logout() {
+            window.location.href = 'login.html';
+        }
+        // Função para filtrar produtos
+        document.getElementById('filterInput').addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                const productName = product.querySelector('span').textContent.toLowerCase();
+                product.style.display = productName.includes(filter) ? '' : 'none';
+            });
+        });
+
+        // Função para ordenar produtos por quantidade
+        document.getElementById('sortButton').addEventListener('click', function () {
+            const shelves = document.querySelectorAll('.shelf');
+            shelves.forEach(shelf => {
+                const products = Array.from(shelf.querySelectorAll('.product'));
+                products.sort((a, b) => {
+                    const qtyA = parseInt(a.querySelector('.quantity').textContent);
+                    const qtyB = parseInt(b.querySelector('.quantity').textContent);
+                    return qtyB - qtyA; // Ordem decrescente
+                });
+                // Remover produtos do DOM
+                products.forEach(product => shelf.appendChild(product));
+            });
+        });
+    </script>
+</body>
+
+</html>
