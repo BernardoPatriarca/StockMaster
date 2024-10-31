@@ -9,8 +9,11 @@
     <link rel="icon" href="https://i.imgur.com/fNGQqe7.png" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
     <link rel="stylesheet" href="tema.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
@@ -18,55 +21,84 @@
     .shelf-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: space-around;
         margin-bottom: 20px;
+        perspective: 1000px;
     }
 
     .shelf {
         background-color: #e9ecef;
         border: 1px solid #ced4da;
-        border-radius: 5px;
-        width: 18%;
-        /* 5 prateleiras em uma linha */
-        margin-bottom: 20px;
-        padding: 10px;
+        border-radius: 8px;
+        width: 22%;
+        margin: 20px;
+        padding: 15px;
+        box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
     }
 
     .shelf h3 {
         text-align: center;
-        margin-bottom: 10px;
+        font-weight: bold;
+        font-size: 1.2em;
+        color: #343a40;
+        margin-bottom: 15px;
     }
 
     .product {
         display: flex;
         justify-content: space-between;
-        padding: 5px 10px;
-        border-radius: 5px;
-        margin-bottom: 5px;
+        padding: 8px 12px;
+        border-radius: 4px;
+        margin-bottom: 8px;
         color: #fff;
-        /* Cor do texto branco */
+        transition: transform 0.3s;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+    }
+
+    .product:hover {
+        transform: scale(1.05);
     }
 
     .status-ok {
-        background-color: green;
+        background-color: #28a745;
     }
 
     .status-low {
-        background-color: orange;
+        background-color: #ffc107;
     }
 
     .status-empty {
-        background-color: red;
+        background-color: #dc3545;
     }
 
-    .container, .container-lg, .container-md, .container-sm, .container-xl {
-        max-width: 90%;
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl {
+        max-width: 95%;
+    }
+
+    .campoPesquisa {
+        margin-right: 10px;
+    }
+
+    .pesquisa {
+        display: flex;
     }
 
     @media (max-width: 768px) {
         .shelf {
             width: 100%;
-            /* 1 prateleira em telas pequenas */
+        }
+
+        .pesquisa {
+            display: block !important;
+        }
+
+        .campoPesquisa {
+            margin-right: 0px !important;
         }
     }
 </style>
@@ -79,7 +111,6 @@
                 <img src="https://i.imgur.com/3r4LnfL.png" class="logo" alt="Logo">
             </a>
             <i class="fas fa-bars toggle" onclick="toggleSidebar()" id="toggleIcon"></i>
-
         </div>
         <div class="top-bar-right">
             <a href="https://web.whatsapp.com/" target="_blank" style="text-decoration: none; padding-top: 10px;">
@@ -102,12 +133,41 @@
     <div class="main-content" id="main-content">
         <div class="container">
             <h1 class="text-center my-4">Mapeamento de Itens - Estoque</h1>
+            <div class="pesquisa">
 
-            <input type="text" id="filterInput" class="form-control mb-3" placeholder="Filtrar produtos...">
-            <button id="sortButton" class="btn btn-primary mb-3">Ordenar por Quantidade</button>
+                <input type="text" id="filterInput" class="campoPesquisa form-control mb-3"
+                    placeholder="Filtrar produtos...">
+                <div style="display: flex;">
+
+                    <button id="clearFilters" style="margin-right: 10px;" class="btn btn-secondary mb-3">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+
+                    <div class="dropdown mb-3">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Opções de Filtro e Ordenação
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><button id="sortQuantity" class="dropdown-item"><i class="fa-solid fa-circle"
+                                        style="margin-right: 10px; margin-left: -6px; color: #6da3dd;"></i> Ordenar por Quantidade</button></li>
+                            <li><button id="sortName" class="dropdown-item"><i class="fa-solid fa-circle"
+                                        style="margin-right: 10px; margin-left: -6px; color: #6da3dd;"></i> Ordenar por Nome</button></li>
+                            <li><button id="filterOk" class="dropdown-item"><i class="fa-solid fa-circle"
+                                        style="margin-right: 10px; margin-left: -6px; color: #7be293;"></i> Exibir Disponíveis</button></li>
+                            <li><button id="filterLow" class="dropdown-item"><i class="fa-solid fa-circle"
+                                        style="margin-right: 10px; margin-left: -6px; color: #d3b868;"></i> Exibir Baixa Quantidade</button></li>
+                            <li><button id="filterEmpty" class="dropdown-item"><i class="fa-solid fa-circle"
+                                        style="margin-right: 10px; margin-left: -6px; color: #d16b75;"></i> Exibir Esgotados</button></li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
 
             <div class="shelf-container" id="shelfContainer">
-                <!-- Prateleira 1 -->
+                <!-- Prateleiras com produtos -->
                 <div class="shelf">
                     <h3>Prateleira 1</h3>
                     <div class="product status-ok">
@@ -131,7 +191,7 @@
                         <span class="quantity">40</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 2 -->
                 <div class="shelf">
                     <h3>Prateleira 2</h3>
@@ -156,7 +216,7 @@
                         <span class="quantity">20</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 3 -->
                 <div class="shelf">
                     <h3>Prateleira 3</h3>
@@ -181,7 +241,7 @@
                         <span class="quantity">25</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 4 -->
                 <div class="shelf">
                     <h3>Prateleira 4</h3>
@@ -206,7 +266,7 @@
                         <span class="quantity">40</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 5 -->
                 <div class="shelf">
                     <h3>Prateleira 5</h3>
@@ -231,7 +291,7 @@
                         <span class="quantity">40</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 6 -->
                 <div class="shelf">
                     <h3>Prateleira 6</h3>
@@ -256,7 +316,7 @@
                         <span class="quantity">30</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 7 -->
                 <div class="shelf">
                     <h3>Prateleira 7</h3>
@@ -281,7 +341,7 @@
                         <span class="quantity">30</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 8 -->
                 <div class="shelf">
                     <h3>Prateleira 8</h3>
@@ -306,7 +366,7 @@
                         <span class="quantity">30</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 9 -->
                 <div class="shelf">
                     <h3>Prateleira 9</h3>
@@ -331,7 +391,7 @@
                         <span class="quantity">30</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 10 -->
                 <div class="shelf">
                     <h3>Prateleira 10</h3>
@@ -356,7 +416,7 @@
                         <span class="quantity">28</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 11 -->
                 <div class="shelf">
                     <h3>Prateleira 11</h3>
@@ -381,7 +441,7 @@
                         <span class="quantity">40</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 12 -->
                 <div class="shelf">
                     <h3>Prateleira 12</h3>
@@ -406,7 +466,7 @@
                         <span class="quantity">20</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 13 -->
                 <div class="shelf">
                     <h3>Prateleira 13</h3>
@@ -431,7 +491,7 @@
                         <span class="quantity">25</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 14 -->
                 <div class="shelf">
                     <h3>Prateleira 14</h3>
@@ -456,7 +516,7 @@
                         <span class="quantity">40</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 15 -->
                 <div class="shelf">
                     <h3>Prateleira 15</h3>
@@ -481,7 +541,7 @@
                         <span class="quantity">40</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 16 -->
                 <div class="shelf">
                     <h3>Prateleira 16</h3>
@@ -506,7 +566,7 @@
                         <span class="quantity">30</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 17 -->
                 <div class="shelf">
                     <h3>Prateleira 17</h3>
@@ -531,7 +591,7 @@
                         <span class="quantity">30</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 18 -->
                 <div class="shelf">
                     <h3>Prateleira 18</h3>
@@ -556,7 +616,7 @@
                         <span class="quantity">30</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 19 -->
                 <div class="shelf">
                     <h3>Prateleira 19</h3>
@@ -581,7 +641,7 @@
                         <span class="quantity">30</span>
                     </div>
                 </div>
-            
+
                 <!-- Prateleira 20 -->
                 <div class="shelf">
                     <h3>Prateleira 20</h3>
@@ -607,57 +667,103 @@
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 
     <script>
-
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('main-content');
             const toggleIcon = document.getElementById('toggleIcon');
 
-            if (sidebar.classList.contains('show')) {
-                sidebar.classList.remove('show');
-                mainContent.classList.remove('shifted');
-                toggleIcon.style.color = '#fff';
-            } else {
-                sidebar.classList.add('show');
-                mainContent.classList.add('shifted');
-                toggleIcon.style.color = '#343a40';
-            }
+            sidebar.classList.toggle('show');
+            mainContent.classList.toggle('shifted');
+            toggleIcon.style.color = sidebar.classList.contains('show') ? '#343a40' : '#fff';
         }
-
 
         function logout() {
             window.location.href = 'login.html';
         }
-        // Função para filtrar produtos
+
         document.getElementById('filterInput').addEventListener('input', function () {
             const filter = this.value.toLowerCase();
-            const products = document.querySelectorAll('.product');
-            products.forEach(product => {
+            document.querySelectorAll('.product').forEach(product => {
                 const productName = product.querySelector('span').textContent.toLowerCase();
                 product.style.display = productName.includes(filter) ? '' : 'none';
             });
         });
 
-        // Função para ordenar produtos por quantidade
-        document.getElementById('sortButton').addEventListener('click', function () {
-            const shelves = document.querySelectorAll('.shelf');
-            shelves.forEach(shelf => {
-                const products = Array.from(shelf.querySelectorAll('.product'));
-                products.sort((a, b) => {
-                    const qtyA = parseInt(a.querySelector('.quantity').textContent);
-                    const qtyB = parseInt(b.querySelector('.quantity').textContent);
-                    return qtyB - qtyA; // Ordem decrescente
-                });
-                // Remover produtos do DOM
-                products.forEach(product => shelf.appendChild(product));
+        document.getElementById('sortQuantity').addEventListener('click', function () {
+            document.querySelectorAll('.shelf').forEach(shelf => {
+                Array.from(shelf.querySelectorAll('.product'))
+                    .sort((a, b) => parseInt(b.querySelector('.quantity').textContent) - parseInt(a.querySelector('.quantity').textContent))
+                    .forEach(product => shelf.appendChild(product));
             });
         });
+
+        document.getElementById('sortName').addEventListener('click', function () {
+            document.querySelectorAll('.shelf').forEach(shelf => {
+                Array.from(shelf.querySelectorAll('.product'))
+                    .sort((a, b) => a.querySelector('span').textContent.localeCompare(b.querySelector('span').textContent))
+                    .forEach(product => shelf.appendChild(product));
+            });
+        });
+
+        document.getElementById('filterOk').addEventListener('click', function () {
+            document.querySelectorAll('.product').forEach(product => {
+                product.style.display = product.classList.contains('status-ok') ? '' : 'none';
+            });
+        });
+
+        document.getElementById('filterLow').addEventListener('click', function () {
+            document.querySelectorAll('.product').forEach(product => {
+                product.style.display = product.classList.contains('status-low') ? '' : 'none';
+            });
+        });
+
+        document.getElementById('filterEmpty').addEventListener('click', function () {
+            document.querySelectorAll('.product').forEach(product => {
+                product.style.display = product.classList.contains('status-empty') ? '' : 'none';
+            });
+        });
+
+        document.querySelectorAll('.product').forEach(item => {
+            item.addEventListener('click', () => {
+                window.location.href = 'edicaoProduto.html';
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.shelf').forEach(shelf => {
+                const products = Array.from(shelf.querySelectorAll('.product'));
+                products.forEach((product, index) => {
+                    product.dataset.originalIndex = index; // Armazena o índice original
+                });
+            });
+        });
+
+        document.getElementById('clearFilters').addEventListener('click', function () {
+            // Limpar o campo de texto do filtro
+            document.getElementById('filterInput').value = '';
+
+            // Restaurar a exibição de todos os produtos
+            document.querySelectorAll('.product').forEach(product => {
+                product.style.display = '';
+            });
+
+            // Restaurar a ordem original dos produtos em cada prateleira
+            document.querySelectorAll('.shelf').forEach(shelf => {
+                const products = Array.from(shelf.querySelectorAll('.product'));
+
+                // Reordena com base no índice original
+                products.sort((a, b) => a.dataset.originalIndex - b.dataset.originalIndex)
+                    .forEach(product => shelf.appendChild(product));
+            });
+        });
+
+
     </script>
+
 </body>
 
 </html>
